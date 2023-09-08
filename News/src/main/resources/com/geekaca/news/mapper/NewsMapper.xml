@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekaca.news.mapper.NewsMapper">
+
+    <resultMap id="BaseResultMap" type="com.geekaca.news.domain.News">
+            <id property="newsId" column="news_id" jdbcType="BIGINT"/>
+            <result property="newsTitle" column="news_title" jdbcType="VARCHAR"/>
+            <result property="newsSubUrl" column="news_sub_url" jdbcType="VARCHAR"/>
+            <result property="newsCoverImage" column="news_cover_image" jdbcType="VARCHAR"/>
+            <result property="newsContent" column="news_content" jdbcType="VARCHAR"/>
+            <result property="newsCategoryId" column="news_category_id" jdbcType="INTEGER"/>
+            <result property="newsCategoryName" column="news_category_name" jdbcType="VARCHAR"/>
+            <result property="newsTags" column="news_tags" jdbcType="VARCHAR"/>
+            <result property="newsStatus" column="news_status" jdbcType="TINYINT"/>
+            <result property="newsViews" column="news_views" jdbcType="BIGINT"/>
+            <result property="enableComment" column="enable_comment" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        news_id,news_title,news_sub_url,
+        news_cover_image,news_content,news_category_id,
+        news_category_name,news_tags,news_status,
+        news_views,enable_comment,is_deleted,
+        create_time,update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_news
+        where  news_id = #{newsId,jdbcType=BIGINT} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tb_news
+        where  news_id = #{newsId,jdbcType=BIGINT} 
+    </delete>
+    <insert id="insert" keyColumn="news_id" keyProperty="newsId" parameterType="com.geekaca.news.domain.News" useGeneratedKeys="true">
+        insert into tb_news
+        ( news_id,news_title,news_sub_url
+        ,news_cover_image,news_content,news_category_id
+        ,news_category_name,news_tags,news_status
+        ,news_views,enable_comment,is_deleted
+        ,create_time,update_time)
+        values (#{newsId,jdbcType=BIGINT},#{newsTitle,jdbcType=VARCHAR},#{newsSubUrl,jdbcType=VARCHAR}
+        ,#{newsCoverImage,jdbcType=VARCHAR},#{newsContent,jdbcType=VARCHAR},#{newsCategoryId,jdbcType=INTEGER}
+        ,#{newsCategoryName,jdbcType=VARCHAR},#{newsTags,jdbcType=VARCHAR},#{newsStatus,jdbcType=TINYINT}
+        ,#{newsViews,jdbcType=BIGINT},#{enableComment,jdbcType=TINYINT},#{isDeleted,jdbcType=TINYINT}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="news_id" keyProperty="newsId" parameterType="com.geekaca.news.domain.News" useGeneratedKeys="true">
+        insert into tb_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="newsId != null">news_id,</if>
+                <if test="newsTitle != null">news_title,</if>
+                <if test="newsSubUrl != null">news_sub_url,</if>
+                <if test="newsCoverImage != null">news_cover_image,</if>
+                <if test="newsContent != null">news_content,</if>
+                <if test="newsCategoryId != null">news_category_id,</if>
+                <if test="newsCategoryName != null">news_category_name,</if>
+                <if test="newsTags != null">news_tags,</if>
+                <if test="newsStatus != null">news_status,</if>
+                <if test="newsViews != null">news_views,</if>
+                <if test="enableComment != null">enable_comment,</if>
+                <if test="isDeleted != null">is_deleted,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="newsId != null">#{newsId,jdbcType=BIGINT},</if>
+                <if test="newsTitle != null">#{newsTitle,jdbcType=VARCHAR},</if>
+                <if test="newsSubUrl != null">#{newsSubUrl,jdbcType=VARCHAR},</if>
+                <if test="newsCoverImage != null">#{newsCoverImage,jdbcType=VARCHAR},</if>
+                <if test="newsContent != null">#{newsContent,jdbcType=VARCHAR},</if>
+                <if test="newsCategoryId != null">#{newsCategoryId,jdbcType=INTEGER},</if>
+                <if test="newsCategoryName != null">#{newsCategoryName,jdbcType=VARCHAR},</if>
+                <if test="newsTags != null">#{newsTags,jdbcType=VARCHAR},</if>
+                <if test="newsStatus != null">#{newsStatus,jdbcType=TINYINT},</if>
+                <if test="newsViews != null">#{newsViews,jdbcType=BIGINT},</if>
+                <if test="enableComment != null">#{enableComment,jdbcType=TINYINT},</if>
+                <if test="isDeleted != null">#{isDeleted,jdbcType=TINYINT},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.geekaca.news.domain.News">
+        update tb_news
+        <set>
+                <if test="newsTitle != null">
+                    news_title = #{newsTitle,jdbcType=VARCHAR},
+                </if>
+                <if test="newsSubUrl != null">
+                    news_sub_url = #{newsSubUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="newsCoverImage != null">
+                    news_cover_image = #{newsCoverImage,jdbcType=VARCHAR},
+                </if>
+                <if test="newsContent != null">
+                    news_content = #{newsContent,jdbcType=VARCHAR},
+                </if>
+                <if test="newsCategoryId != null">
+                    news_category_id = #{newsCategoryId,jdbcType=INTEGER},
+                </if>
+                <if test="newsCategoryName != null">
+                    news_category_name = #{newsCategoryName,jdbcType=VARCHAR},
+                </if>
+                <if test="newsTags != null">
+                    news_tags = #{newsTags,jdbcType=VARCHAR},
+                </if>
+                <if test="newsStatus != null">
+                    news_status = #{newsStatus,jdbcType=TINYINT},
+                </if>
+                <if test="newsViews != null">
+                    news_views = #{newsViews,jdbcType=BIGINT},
+                </if>
+                <if test="enableComment != null">
+                    enable_comment = #{enableComment,jdbcType=TINYINT},
+                </if>
+                <if test="isDeleted != null">
+                    is_deleted = #{isDeleted,jdbcType=TINYINT},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   news_id = #{newsId,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.geekaca.news.domain.News">
+        update tb_news
+        set 
+            news_title =  #{newsTitle,jdbcType=VARCHAR},
+            news_sub_url =  #{newsSubUrl,jdbcType=VARCHAR},
+            news_cover_image =  #{newsCoverImage,jdbcType=VARCHAR},
+            news_content =  #{newsContent,jdbcType=VARCHAR},
+            news_category_id =  #{newsCategoryId,jdbcType=INTEGER},
+            news_category_name =  #{newsCategoryName,jdbcType=VARCHAR},
+            news_tags =  #{newsTags,jdbcType=VARCHAR},
+            news_status =  #{newsStatus,jdbcType=TINYINT},
+            news_views =  #{newsViews,jdbcType=BIGINT},
+            enable_comment =  #{enableComment,jdbcType=TINYINT},
+            is_deleted =  #{isDeleted,jdbcType=TINYINT},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP}
+        where   news_id = #{newsId,jdbcType=BIGINT} 
+    </update>
+</mapper>
