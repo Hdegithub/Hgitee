@@ -1,6 +1,7 @@
 package com.geekaca.news;
 
 import com.geekaca.news.domain.News;
+import com.geekaca.news.domain.NewsComment;
 import com.geekaca.news.mapper.NewsMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
-class NewsApplicationTests {
+public class NewsApplicationTests {
 
     @Autowired
     private NewsMapper newsMapper;
@@ -21,7 +23,7 @@ class NewsApplicationTests {
      * 测试查询
      */
     @Test
-    void testSelectByPrimaryKey() {
+    public void testSelectByPrimaryKey() {
         News news = newsMapper.selectByPrimaryKey(5L);
         Assertions.assertNotNull(news);
         System.out.println(news);
@@ -80,5 +82,42 @@ class NewsApplicationTests {
         news.setNewsSubUrl("helloBoot");
         int i = newsMapper.updateByPrimaryKey(news);
         System.out.println(i);
+    }
+
+    @Test
+    public void testSelectAll(){
+        List<News> newsList = newsMapper.selectAll();
+        Assertions.assertNotNull(newsList);
+        Assertions.assertTrue(newsList.size() > 0);
+        newsList.forEach((news)->{
+            System.out.println(news);
+        });
+    }
+
+    /**
+     * 一个新闻对象 身上有一个属性 是集合 集合中村的是 针对这个新闻的所有评论
+     */
+    @Test
+    public void testSelectById(){
+        News news = newsMapper.selectById(6L);
+        Assertions.assertNotNull(news);
+        System.out.println(news);
+        List<NewsComment> commentList = news.getCommentList();
+        Assertions.assertNotNull(commentList);
+        Assertions.assertTrue(commentList.size() > 0);
+        System.out.println(commentList);
+    }
+
+    @Test
+    public void testSelectByName(){
+        News news = new News();
+        news.setNewsTitle("hello");
+        news.setNewsContent("hello");
+        List<News> newsList = newsMapper.selectByName(news);
+        Assertions.assertNotNull(newsList);
+        Assertions.assertTrue(newsList.size() > 0);
+        newsList.forEach((news1)->{
+            System.out.println(news1);
+        });
     }
 }

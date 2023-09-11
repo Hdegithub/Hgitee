@@ -2,6 +2,8 @@ package com.geekaca.news.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -79,6 +81,8 @@ public class News implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+
+    private List<NewsComment> commentList;
 
     private static final long serialVersionUID = 1L;
 
