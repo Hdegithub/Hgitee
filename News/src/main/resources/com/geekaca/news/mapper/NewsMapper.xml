@@ -44,6 +44,7 @@
         </collection>
     </resultMap>
 
+    <!--     把常用的列 放在一起，方便引用-->
     <sql id="Base_Column_List">
         news_id
         ,news_title,news_sub_url,
@@ -220,5 +221,13 @@
           AND (nw.news_title LIKE CONCAT('%', #{newsTitle}, '%')
             OR nw.news_content LIKE CONCAT('%', #{newsContent}, '%'))
         ORDER BY nw.create_time DESC;
+    </select>
+<!--    查询新闻文章列表 is_deleted=0 未删除-->
+    <select id="findNewsList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_news
+        where is_deleted = 0
+        order by create_time desc
     </select>
 </mapper>

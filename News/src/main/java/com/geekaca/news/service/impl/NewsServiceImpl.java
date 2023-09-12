@@ -27,4 +27,9 @@ public class NewsServiceImpl implements NewsService {
         List<News> newsList = newsMapper.selectByName(news);
         return newsList;
     }
+
+    public List<News> findNewsList() {
+        List<News> newsList = newsMapper.findNewsList();
+        return newsList;
+    }
 }

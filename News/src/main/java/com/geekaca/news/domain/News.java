@@ -82,6 +82,9 @@ public class News implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 此篇新闻文章下 所有的评论
+     */
     private List<NewsComment> commentList;
 
     private static final long serialVersionUID = 1L;

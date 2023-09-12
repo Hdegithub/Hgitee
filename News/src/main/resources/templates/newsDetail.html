@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--th:text 为 Thymeleaf 属性，用于在展示文本-->
+<h1 th:text="${newsInfo.newsTitle}"></h1>
+<font size="10" th:text="${newsInfo.createTime}"></font>
+<p th:text="${newsInfo.newsContent}"></p>
+</body>
+</html>

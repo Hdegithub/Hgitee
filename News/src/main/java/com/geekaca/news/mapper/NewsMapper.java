@@ -35,5 +35,7 @@ public interface NewsMapper {
     //模糊查询 根据
     List<News> selectByName(News news);
 
+    //获取新闻列表
+    List<News> findNewsList();
 
 }
