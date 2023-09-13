@@ -1,8 +1,10 @@
 package com.geekaca.news;
 
+import cn.hutool.crypto.SecureUtil;
 import com.geekaca.news.domain.News;
 import com.geekaca.news.domain.NewsComment;
 import com.geekaca.news.mapper.NewsMapper;
+import org.apache.catalina.security.SecurityUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,5 +121,12 @@ public class NewsApplicationTests {
         newsList.forEach((news1)->{
             System.out.println(news1);
         });
+    }
+
+    @Test
+    public void testMD5(){
+        String str = "123456";
+        String target = SecureUtil.md5(str);
+        System.out.println(target);
     }
 }
