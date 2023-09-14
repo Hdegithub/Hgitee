@@ -2,6 +2,8 @@ package com.geekaca.news.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -43,6 +45,7 @@ public class NewsComment implements Serializable {
     /**
      * 评论提交时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date commentCreateTime;
 
     /**
@@ -58,6 +61,7 @@ public class NewsComment implements Serializable {
     /**
      * 回复时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date replyCreateTime;
 
     /**

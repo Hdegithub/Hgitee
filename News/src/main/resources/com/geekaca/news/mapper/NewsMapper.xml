@@ -230,4 +230,20 @@
         where is_deleted = 0
         order by create_time desc
     </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT nw.news_id,
+               nw.news_title,
+               nw.create_time,
+               nw.news_status,
+               nw.news_views,
+               nc.category_name as news_category_name
+        FROM tb_news nw,
+             tb_news_category nc
+        WHERE nw.news_category_id = nc.category_id
+        ORDER BY nw.create_time DESC
+        limit #{start},#{recordSize}
+    </select>
+    <select id="selectNewsCount" resultType="java.lang.Integer">
+        select count(*) from tb_news;
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.geekaca.news.service;
 
 import com.geekaca.news.domain.News;
+import com.geekaca.news.util.PageResult;
 
 
 import java.util.List;
@@ -31,4 +32,12 @@ public interface NewsService {
      * @return
      */
     List<News> findNewsList();
+
+    /**
+     * 查询新闻列表 带有分页
+     * @param pageNo 页码 第几页
+     * @param pageSize 每页记录条数
+     * @return
+     */
+    PageResult getPageNews(Integer pageNo, Integer pageSize);
 }

@@ -2,6 +2,7 @@ package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.News;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,5 +38,15 @@ public interface NewsMapper {
 
     //获取新闻列表
     List<News> findNewsList();
+
+    /**
+     * 发送sql查询 数据 limit (页码 - 1) * 每页条数
+     * @param start  limit 第一个参数
+     * @param recordSize 去多少条数据
+     * @return
+     */
+    List<News> selectByPage(@Param("start") Integer start, @Param("recordSize") Integer recordSize);
+    //查询数量
+    int selectNewsCount();
 
 }

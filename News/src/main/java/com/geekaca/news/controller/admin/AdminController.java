@@ -5,6 +5,7 @@ import cn.hutool.crypto.SecureUtil;
 import com.geekaca.news.domain.AdminUser;
 import com.geekaca.news.mapper.AdminUserMapper;
 import com.geekaca.news.service.AdminUserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ public class AdminController {
         }
         //连接DB 验证用户名和密码
         AdminUser user = userService.login(userName, SecureUtil.md5(password));
-        if (user != null){
+        if (user == null){
             session.setAttribute("errorMsg", "登陆失败");
             return "admin/login";
         } else {
@@ -55,6 +56,19 @@ public class AdminController {
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
         }
+    }
+
+    //登录成功后访问的地址
+    @GetMapping({"","/index","/index.html"})
+    public String index(HttpServletRequest req){
+        req.setAttribute("path","index");
+        //类别数量 ctrl + Alt 鼠标左键点击，跳转函数实现
+        req.setAttribute("categoryCount",0);
+        req.setAttribute("blogCount",0);
+        req.setAttribute("linkCount",0);
+        req.setAttribute("tagCount",0);
+        req.setAttribute("commentCount",0);
+        return "admin/index";
     }
 }
 
