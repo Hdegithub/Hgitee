@@ -64,6 +64,13 @@ public class AdminController {
         req.setAttribute("path","index");
         //类别数量 ctrl + Alt 鼠标左键点击，跳转函数实现
         req.setAttribute("categoryCount",0);
+        System.out.println("ceshi");
+        System.out.println("ceshi");
+        System.out.println("ceshi");
+        System.out.println("ceshi");
+        System.out.println("ceshi");
+        System.out.println("ceshi");
+        System.out.println("ceshi");
         req.setAttribute("blogCount",0);
         req.setAttribute("linkCount",0);
         req.setAttribute("tagCount",0);
