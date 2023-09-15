@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekaca.news.mapper.NewsTagRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.geekaca.news.domain.NewsTagRelation">
+            <id property="relationId" column="relation_id" jdbcType="BIGINT"/>
+            <result property="newsId" column="news_id" jdbcType="BIGINT"/>
+            <result property="tagId" column="tag_id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        relation_id,news_id,tag_id,
+        create_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_news_tag_relation
+        where  relation_id = #{relationId,jdbcType=BIGINT} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tb_news_tag_relation
+        where  relation_id = #{relationId,jdbcType=BIGINT} 
+    </delete>
+    <insert id="insert" keyColumn="relation_id" keyProperty="relationId" parameterType="com.geekaca.news.domain.NewsTagRelation" useGeneratedKeys="true">
+        insert into tb_news_tag_relation
+        ( relation_id,news_id,tag_id
+        ,create_time)
+        values (#{relationId,jdbcType=BIGINT},#{newsId,jdbcType=BIGINT},#{tagId,jdbcType=INTEGER}
+        ,#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="relation_id" keyProperty="relationId" parameterType="com.geekaca.news.domain.NewsTagRelation" useGeneratedKeys="true">
+        insert into tb_news_tag_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="relationId != null">relation_id,</if>
+                <if test="newsId != null">news_id,</if>
+                <if test="tagId != null">tag_id,</if>
+                <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="relationId != null">#{relationId,jdbcType=BIGINT},</if>
+                <if test="newsId != null">#{newsId,jdbcType=BIGINT},</if>
+                <if test="tagId != null">#{tagId,jdbcType=INTEGER},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.geekaca.news.domain.NewsTagRelation">
+        update tb_news_tag_relation
+        <set>
+                <if test="newsId != null">
+                    news_id = #{newsId,jdbcType=BIGINT},
+                </if>
+                <if test="tagId != null">
+                    tag_id = #{tagId,jdbcType=INTEGER},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   relation_id = #{relationId,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.geekaca.news.domain.NewsTagRelation">
+        update tb_news_tag_relation
+        set 
+            news_id =  #{newsId,jdbcType=BIGINT},
+            tag_id =  #{tagId,jdbcType=INTEGER},
+            create_time =  #{createTime,jdbcType=TIMESTAMP}
+        where   relation_id = #{relationId,jdbcType=BIGINT} 
+    </update>
+</mapper>

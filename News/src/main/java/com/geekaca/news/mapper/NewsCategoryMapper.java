@@ -1,6 +1,9 @@
 package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.NewsCategory;
+import com.geekaca.news.utils.PageQueryUtil;
+
+import java.util.List;
 
 /**
 * @author kanata
@@ -22,4 +25,5 @@ public interface NewsCategoryMapper {
 
     int updateByPrimaryKey(NewsCategory record);
 
+    List<NewsCategory> findAll();
 }
