@@ -28,4 +28,6 @@ public interface NewsCommentMapper {
     int updateByPrimaryKey(NewsComment record);
 
     List<NewsComment> findNewsCommentList(PageBean pageBean);
+
+    Boolean checkDone(Integer[] ids);
 }
