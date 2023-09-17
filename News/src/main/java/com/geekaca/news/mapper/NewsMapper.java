@@ -31,7 +31,7 @@ public interface NewsMapper {
     // 前台页面 新闻列表查询 泛型约束
     List<News> selectAll();
 
-    News selectById(Long id);
+    News selectNewsAndCommentsById(Long id);
 
     //模糊查询 根据
     List<News> selectByName(News news);

@@ -11,7 +11,6 @@ import com.geekaca.news.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     public News selectById(Long id) {
-        News news = newsMapper.selectById(id);
+        News news = newsMapper.selectNewsAndCommentsById(id);
         return news;
     }
 

@@ -36,16 +36,16 @@ public class NewsController {
     }
 
     @GetMapping({"/page/{pageNum}"})
-    private String page(HttpServletRequest request,@PathVariable("pageNum")int pageNum) {
-        PageResult pageNews =newsService.getPageNews(pageNum,8);
+    private String page(HttpServletRequest request, @PathVariable("pageNum") int pageNum) {
+        PageResult pageNews = newsService.getPageNews(pageNum, 8);
         request.setAttribute("blogPageResult", pageNews);
         request.setAttribute("newBlogs", 0);
 
-        request.setAttribute("hotBlogs",0);
+        request.setAttribute("hotBlogs", 0);
 
         request.setAttribute("hotTags", 0);
         request.setAttribute("pageName", "首页");
-        request.setAttribute("configurations",configService.getAllConfigs());
+        request.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/index";
     }
 
@@ -76,5 +76,19 @@ public class NewsController {
         News news = newsService.selectById(newsId);
         req.setAttribute("newsInfo", news);
         return "newsDetail";
+    }
+
+    /**
+     * 详情页
+     *
+     * @return
+     */
+    @GetMapping({"/blog/{newsId}", "/article/{newsId}"})
+    public String detail(HttpServletRequest request, @PathVariable("newsId") Long newsId, @RequestParam(value = "commentPage", required = false, defaultValue = "1") Integer commentPage) {
+        News newsAndComments = newsService.selectById(newsId);
+        request.setAttribute("blogDetailVO", newsAndComments);
+        request.setAttribute("pageName", "详情");
+        request.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/detail";
     }
 }

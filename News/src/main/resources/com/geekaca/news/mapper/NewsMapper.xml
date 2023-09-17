@@ -190,7 +190,7 @@
     </select>
 <!--    1:N 查询结果
         新闻 评论-->
-    <select id="selectById" resultMap="NewsMap">
+    <select id="selectNewsAndCommentsById" resultMap="NewsMap">
         SELECT
             *
         FROM
