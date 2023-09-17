@@ -7,7 +7,7 @@ import com.geekaca.news.mapper.NewsMapper;
 import com.geekaca.news.mapper.NewsTagMapper;
 import com.geekaca.news.mapper.NewsTagRelationMapper;
 import com.geekaca.news.service.NewsService;
-import com.geekaca.news.util.PageResult;
+import com.geekaca.news.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

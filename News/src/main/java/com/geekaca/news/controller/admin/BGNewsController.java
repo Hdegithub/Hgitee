@@ -1,18 +1,13 @@
 package com.geekaca.news.controller.admin;
 
-import com.geekaca.news.domain.News;
 import com.geekaca.news.service.NewsService;
-import com.geekaca.news.util.NewsConstants;
-import com.geekaca.news.util.PageResult;
-import com.geekaca.news.util.Result;
+import com.geekaca.news.utils.NewsConstans;
+import com.geekaca.news.utils.PageResult;
+import com.geekaca.news.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 //后台管理 文章管理
 @Controller
@@ -34,10 +29,10 @@ public class BGNewsController {
     @GetMapping("/blogs/list")
     // 结果会被转化为JSON结构
     @ResponseBody
-    public Result newsList(@RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
+    public Result newsList(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit){
         PageResult pageNewsRs = newsService.getPageNews(page, limit);
         Result result = new Result();
-        result.setResultCode(NewsConstants.RESULT_OK);
+        result.setResultCode(NewsConstans.RESULT_OK);
         result.setData(pageNewsRs);
         return result;
     }
