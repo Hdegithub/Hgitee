@@ -49,4 +49,5 @@ public interface NewsMapper {
     //查询数量
     int selectNewsCount();
 
+    int increateViews(@Param("newsID")Long newsID);
 }

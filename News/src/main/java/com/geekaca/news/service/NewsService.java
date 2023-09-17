@@ -49,4 +49,6 @@ public interface NewsService {
      * @return
      */
     PageResult getPageNews(Integer pageNo, Integer pageSize);
+
+    int updateNewsViews(Long newsId);
 }

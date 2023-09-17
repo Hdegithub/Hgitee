@@ -1,6 +1,10 @@
 package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.NewsComment;
+import com.geekaca.news.utils.PageBean;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author kanata
@@ -8,6 +12,7 @@ import com.geekaca.news.domain.NewsComment;
 * @createDate 2023-09-08 15:24:32
 * @Entity com.geekaca.news.domain.NewsComment
 */
+@Mapper
 public interface NewsCommentMapper {
 
     int deleteByPrimaryKey(Long id);
@@ -22,4 +27,5 @@ public interface NewsCommentMapper {
 
     int updateByPrimaryKey(NewsComment record);
 
+    List<NewsComment> findNewsCommentList(PageBean pageBean);
 }

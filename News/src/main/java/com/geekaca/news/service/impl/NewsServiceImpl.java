@@ -86,4 +86,10 @@ public class NewsServiceImpl implements NewsService {
         PageResult pageResult = new PageResult(newsList,count,pageSize,pageNo);
         return pageResult;
     }
+
+    @Override
+    public int updateNewsViews(Long newsId) {
+        int views = newsMapper.increateViews(newsId);
+        return views;
+    }
 }
