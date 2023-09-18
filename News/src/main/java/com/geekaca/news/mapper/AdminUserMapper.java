@@ -1,6 +1,7 @@
 package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.AdminUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 * @createDate 2023-09-13 14:24:28
 * @Entity com.geekaca.news.domain.AdminUser
 */
+@Mapper
 public interface AdminUserMapper {
 
     int deleteByPrimaryKey(Long id);
