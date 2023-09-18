@@ -1,7 +1,6 @@
 package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.NewsCategory;
-import com.geekaca.news.utils.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

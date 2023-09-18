@@ -2,7 +2,6 @@ package com.geekaca.news.controller.admin;
 
 import com.geekaca.news.service.CommentService;
 import com.geekaca.news.utils.PageBean;
-import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.Result;
 import com.geekaca.news.utils.ResultGenerator;
 import jakarta.annotation.Resource;

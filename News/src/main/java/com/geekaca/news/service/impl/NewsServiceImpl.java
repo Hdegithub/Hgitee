@@ -25,7 +25,7 @@ public class NewsServiceImpl implements NewsService {
     private NewsTagRelationMapper tagRelationMapper;
 
     @Override
-    public String saveNews(News news) {
+    public boolean saveNews(News news) {
         //1.向新闻表增加数据
         //2.向新闻和标签关联表   插入数据
         int insertSelective = newsMapper.insertSelective(news);
@@ -55,7 +55,7 @@ public class NewsServiceImpl implements NewsService {
             tagRelationMapper.insertSelective(newsTagRelation);
             //如果不存在，说明是新的标签，插入标签表tb_news_tag,获取生产的tagId，插入关联表
         }
-        return null;
+        return true;
     }
 
     public List<News> selectAll() {
@@ -79,17 +79,17 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public PageResult getPageNews(Integer pageNo, Integer pageSize) {
+    public PageResult getPageNews(Integer pageNo, Integer pageSize, String keyword) {
         int start = (pageNo - 1) * pageSize;
-        List<News> newsList = newsMapper.selectByPage(start, pageSize);
-        int count = newsMapper.selectNewsCount();
+        List<News> newsList = newsMapper.selectByPage(start, pageSize,keyword);
+        int count = newsMapper.selectNewsCount(keyword);
         PageResult pageResult = new PageResult(newsList,count,pageSize,pageNo);
         return pageResult;
     }
 
     @Override
     public int updateNewsViews(Long newsId) {
-        int views = newsMapper.increateViews(newsId);
+        int views = newsMapper.increaseViews(newsId);
         return views;
     }
 }

@@ -45,9 +45,10 @@ public interface NewsMapper {
      * @param recordSize 去多少条数据
      * @return
      */
-    List<News> selectByPage(@Param("start") Integer start, @Param("recordSize") Integer recordSize);
+    List<News> selectByPage(@Param("start") Integer start, @Param("recordSize") Integer recordSize,
+                            @Param("keyword") String keyword);
     //查询数量
-    int selectNewsCount();
+    int selectNewsCount(@Param("keyword") String keyword);
 
-    int increateViews(@Param("newsID")Long newsID);
+    int increaseViews(@Param("newsId")Long newsId);
 }

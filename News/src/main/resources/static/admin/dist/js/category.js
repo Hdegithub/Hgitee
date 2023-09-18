@@ -1,4 +1,4 @@
-$(function () {
+    $(function () {
     $("#jqGrid").jqGrid({
         url: '/admin/categories/list',
         datatype: "json",

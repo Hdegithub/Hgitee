@@ -3,7 +3,6 @@ package com.geekaca.news.service;
 
 import com.geekaca.news.domain.NewsComment;
 import com.geekaca.news.utils.PageBean;
-import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
 
 public interface CommentService {

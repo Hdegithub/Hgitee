@@ -44,7 +44,7 @@ public class NewsController {
 
     @GetMapping({"/page/{pageNum}"})
     private String page(HttpServletRequest request, @PathVariable("pageNum") int pageNum) {
-        PageResult pageNews = newsService.getPageNews(pageNum, 8);
+        PageResult pageNews = newsService.getPageNews(pageNum, 8, null);
         request.setAttribute("blogPageResult", pageNews);
         request.setAttribute("newBlogs", 0);
 

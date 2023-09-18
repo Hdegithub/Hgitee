@@ -177,11 +177,7 @@
             update_time        = #{updateTime,jdbcType=TIMESTAMP}
         where news_id = #{newsId,jdbcType=BIGINT}
     </update>
-    <update id="increateViews">
-        update tb_news
-        set news_views=news_views + 1
-        where news_id = #{newsId}
-    </update>
+
 
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT nw.news_id,
@@ -207,14 +203,17 @@
         ORDER BY nw.comment_create_time DESC
     </select>
     <select id="selectByName" resultMap="BaseResultMap">
-        SELECT nw.news_id,
-               nw.news_title,
-               nw.create_time,
-               nc.category_name as news_category_name,
-               nw.news_content
-        FROM tb_news nw,
-             tb_news_category nc
-        WHERE nw.news_category_id = nc.category_id
+        SELECT
+            nw.news_id,
+            nw.news_title,
+            nw.create_time,
+            nc.category_name as news_category_name,
+            nw.news_content
+        FROM
+            tb_news nw,
+            tb_news_category nc
+        WHERE
+            nw.news_category_id = nc.category_id
           AND (nw.news_title LIKE CONCAT('%', #{newsTitle}, '%')
             OR nw.news_content LIKE CONCAT('%', #{newsContent}, '%'))
         ORDER BY nw.create_time DESC;
@@ -229,19 +228,36 @@
     </select>
     <select id="selectByPage" resultMap="BaseResultMap">
         SELECT nw.news_id,
-               nw.news_title,
-               nw.create_time,
-               nw.news_status,
-               nw.news_views,
-               nc.category_name as news_category_name
+        nw.news_title,
+        nw.create_time,
+        nw.news_status,
+        nw.news_views,
+        nc.category_name as news_category_name
         FROM tb_news nw,
-             tb_news_category nc
+        tb_news_category nc
         WHERE nw.news_category_id = nc.category_id
+        <if test="keyword != null and keyword != ''">
+            and (nw.news_title like concat('%', #{keyword}, '%')
+            or  nc.category_name like concat('%', #{keyword}, '%'))
+        </if>
         ORDER BY nw.create_time DESC
-            limit #{start}, #{recordSize}
+        limit #{start},#{recordSize}
     </select>
     <select id="selectNewsCount" resultType="java.lang.Integer">
-        select count(*)
-        from tb_news;
+        SELECT
+        count(*)
+        FROM
+        tb_news nw,
+        tb_news_category nc
+        WHERE nw.news_category_id = nc.category_id
+        <if test="keyword != null and keyword != ''">
+            and (nw.news_title like concat('%', #{keyword}, '%') or
+            nc.category_name like concat('%', #{keyword}, '%'))
+        </if>
     </select>
+
+    <update id="increaseViews">
+        update tb_news set news_views = news_views + 1
+        where news_id = #{newsId}
+    </update>
 </mapper>

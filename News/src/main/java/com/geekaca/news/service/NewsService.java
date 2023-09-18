@@ -10,7 +10,7 @@ import java.util.List;
 
 @Transactional
 public interface NewsService {
-    String saveNews(News news);
+    boolean saveNews(News news);
 
     /**
      * 前台页面 新闻列表查询
@@ -46,9 +46,10 @@ public interface NewsService {
      * 查询新闻列表 带有分页
      * @param pageNo 页码 第几页
      * @param pageSize 每页记录条数
+     * @param keyword
      * @return
      */
-    PageResult getPageNews(Integer pageNo, Integer pageSize);
+    PageResult getPageNews(Integer pageNo, Integer pageSize, String keyword);
 
     int updateNewsViews(Long newsId);
 }

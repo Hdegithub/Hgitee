@@ -5,7 +5,7 @@ public class PageBean {
     private Integer pageSize;
     private Integer newsId;
     private Integer commentStatus;
-    private Integer comment_id;
+    private Integer commentId;
 
     public Integer getPageNo() {
         return pageNo;
@@ -21,5 +21,29 @@ public class PageBean {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public Integer getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(Integer newsId) {
+        this.newsId = newsId;
+    }
+
+    public Integer getCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(Integer commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 }

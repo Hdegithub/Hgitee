@@ -12,8 +12,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private NewsCategoryMapper categoryMapper;
-    @Autowired
-    private CategoryService categoryService;
     @Override
     public List<NewsCategory> getAllCategories() {
         return categoryMapper.findAll();
