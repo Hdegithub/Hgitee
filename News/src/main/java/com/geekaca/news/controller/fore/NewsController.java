@@ -3,9 +3,11 @@ package com.geekaca.news.controller.fore;
 import cn.hutool.captcha.ShearCaptcha;
 import com.geekaca.news.domain.News;
 import com.geekaca.news.domain.NewsComment;
+import com.geekaca.news.domain.TagNewsCount;
 import com.geekaca.news.service.CommentService;
 import com.geekaca.news.service.ConfigService;
 import com.geekaca.news.service.NewsService;
+import com.geekaca.news.service.TagService;
 import com.geekaca.news.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +34,8 @@ public class NewsController {
     private ConfigService configService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private TagService tagService;
 
     /**
      * 首页
@@ -47,9 +52,13 @@ public class NewsController {
         PageResult pageNews = newsService.getPageNews(pageNum, 8, null);
         request.setAttribute("blogPageResult", pageNews);
         request.setAttribute("newBlogs", 0);
-
-        request.setAttribute("hotBlogs", 0);
-
+        //热门标签
+        List<TagNewsCount> tagCounts = tagService.getAll();
+        if (tagCounts == null) {
+            //创建空集合  JSON []
+            tagCounts = Collections.emptyList();
+        }
+        request.setAttribute("hotBlogs", tagCounts);
         request.setAttribute("hotTags", 0);
         request.setAttribute("pageName", "首页");
         request.setAttribute("configurations", configService.getAllConfigs());
@@ -99,6 +108,7 @@ public class NewsController {
         int i = newsService.updateNewsViews(newsId);
         return "blog/" + theme + "/detail";
     }
+
     /**
      * 评论操作
      */

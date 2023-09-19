@@ -16,22 +16,22 @@
                 </form>
             </div>
         </section>
-<!--        <section>-->
-<!--            <div class="sidebar-header">-->
-<!--                    <span class="sidebar-header-title">-->
-<!--                        热门标签-->
-<!--                    </span>-->
-<!--            </div>-->
-<!--            <div class="tags ">-->
-<!--                <th:block th:if="${null != hotTags}">-->
-<!--                    <th:block th:each="hotTag : ${hotTags}">-->
-<!--                        <a rel="tag" th:href="@{'/tag/' + ${hotTag.tagName}}">-->
-<!--                            <th:block th:text="${hotTag.tagName}+'('+${hotTag.tagCount}+')'"></th:block>-->
-<!--                        </a>-->
-<!--                    </th:block>-->
-<!--                </th:block>-->
-<!--            </div>-->
-<!--        </section>-->
+        <section>
+            <div class="sidebar-header">
+                    <span class="sidebar-header-title">
+                        热门标签
+                    </span>
+            </div>
+            <div class="tags ">
+                <th:block th:if="${null != hotTags}">
+                    <th:block th:each="hotTag : ${hotTags}">
+                        <a rel="tag" th:href="@{'/tag/' + ${hotTag.tagName}}">
+                            <th:block th:text="${hotTag.tagName}+'('+${hotTag.tagCount}+')'"></th:block>
+                        </a>
+                    </th:block>
+                </th:block>
+            </div>
+        </section>
 
 </div>
 </html>
