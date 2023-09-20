@@ -44,25 +44,68 @@ public class NewsController {
      */
     @GetMapping({"/", "/index", "index.html"})
     public String index(HttpServletRequest request) {
-        return this.page(request, 1);
+        return this.page(request, 1,null);
     }
 
     @GetMapping({"/page/{pageNum}"})
-    private String page(HttpServletRequest request, @PathVariable("pageNum") int pageNum) {
-        PageResult pageNews = newsService.getPageNews(pageNum, 8, null);
+    private String page(HttpServletRequest request, @PathVariable("pageNum") int pageNum,
+                        @RequestParam(name = "keyword", required = false) String keyword) {
+        if (keyword != null){
+            return "blog/" + theme + "/index";
+        }
+        PageResult pageNews = newsService.getPageNews(pageNum, 8, keyword);
         request.setAttribute("blogPageResult", pageNews);
+        //最新发布
         request.setAttribute("newBlogs", 0);
+        //点击最多
+        request.setAttribute("hotBlogs", 0);
         //热门标签
         List<TagNewsCount> tagCounts = tagService.getAll();
         if (tagCounts == null) {
             //创建空集合  JSON []
             tagCounts = Collections.emptyList();
         }
-        request.setAttribute("hotBlogs", tagCounts);
-        request.setAttribute("hotTags", 0);
+        request.setAttribute("hotTags", tagCounts);
         request.setAttribute("pageName", "首页");
         request.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/index";
+    }
+
+    /**
+     * 搜索列表页
+     *
+     * @return
+     */
+    @GetMapping({"/search/{keyword}"})
+    public String search(HttpServletRequest request, @PathVariable("keyword") String keyword) {
+        return search(request, 1,keyword);
+    }
+
+    /**
+     * 搜索列表页
+     *
+     * @return
+     */
+    @GetMapping({"/search/{keyword}/{pageNum}"})
+    public String search(HttpServletRequest req,@PathVariable("pageNum") int pageNum, @PathVariable("keyword") String keyword) {
+        PageResult pageNews = newsService.getPageNews(pageNum, 5, keyword);
+        req.setAttribute("blogPageResult", pageNews);
+        req.setAttribute("pageName", "搜索");
+        req.setAttribute("pageUrl", "search");
+        req.setAttribute("keyword", keyword);
+        //最新发布
+        req.setAttribute("newBlogs", 0);
+        //点击最多
+        req.setAttribute("hotBlogs", 0);
+        //热门标签
+        List<TagNewsCount> tagCounts = tagService.getAll();
+        if (tagCounts == null) {
+            //创建空集合 JSON[]
+            tagCounts = Collections.emptyList();
+        }
+        req.setAttribute("hotTags", tagCounts);
+        req.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/list";
     }
 
     //传递集合
