@@ -3,6 +3,7 @@ package com.geekaca.news.mapper;
 import com.geekaca.news.domain.News;
 import com.geekaca.news.domain.NewsTag;
 import com.geekaca.news.domain.TagNewsCount;
+import com.geekaca.news.utils.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -31,4 +32,8 @@ public interface NewsTagMapper {
     List<NewsTag>searchAll();
 
     List<TagNewsCount> selectTagNewsCounts();
+
+    List<NewsTag> findTagList(PageQueryUtil pageUtil);
+
+    int getTotalTags(PageQueryUtil pageUtil);
 }
