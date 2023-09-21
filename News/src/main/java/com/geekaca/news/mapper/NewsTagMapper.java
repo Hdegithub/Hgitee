@@ -36,4 +36,9 @@ public interface NewsTagMapper {
     List<NewsTag> findTagList(PageQueryUtil pageUtil);
 
     int getTotalTags(PageQueryUtil pageUtil);
+
+    NewsTag selectByTagName(String tagName);
+
+    int deleteBatch(Integer[] ids);
+
 }

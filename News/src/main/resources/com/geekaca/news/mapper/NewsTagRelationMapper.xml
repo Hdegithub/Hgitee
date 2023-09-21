@@ -22,6 +22,15 @@
         from tb_news_tag_relation
         where  relation_id = #{relationId,jdbcType=BIGINT} 
     </select>
+    <select id="selectDistinctTagIds" resultType="java.lang.Long">
+        select
+        DISTINCT(tag_id)
+        from tb_news_tag_relation
+        where tag_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from tb_news_tag_relation

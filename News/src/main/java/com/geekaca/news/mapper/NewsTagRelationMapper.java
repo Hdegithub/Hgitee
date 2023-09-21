@@ -3,6 +3,8 @@ package com.geekaca.news.mapper;
 import com.geekaca.news.domain.NewsTagRelation;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
 * @author 29484
 * @description 针对表【tb_news_tag_relation】的数据库操作Mapper
@@ -23,5 +25,7 @@ public interface NewsTagRelationMapper {
     int updateByPrimaryKeySelective(NewsTagRelation record);
 
     int updateByPrimaryKey(NewsTagRelation record);
+
+    List<Long> selectDistinctTagIds(Integer[] ids);
 
 }

@@ -8,6 +8,13 @@ import java.util.List;
 
 public interface TagService {
     List<TagNewsCount> getAll();
+
     PageResult getBlogTagPage(PageQueryUtil pageUtil);
+
     int getTotalTags();
+
+    Boolean saveTag(String tagName);
+
+    boolean deleteBatch(Integer[] ids);
+
 }
