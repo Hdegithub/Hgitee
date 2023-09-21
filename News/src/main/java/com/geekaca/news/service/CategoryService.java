@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CategoryService {
     List<NewsCategory>getAllCategories();
+
+    int getTotalCategories();
 }

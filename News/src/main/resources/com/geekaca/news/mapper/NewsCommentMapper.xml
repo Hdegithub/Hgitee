@@ -158,6 +158,16 @@
             limit #{pageNo},#{pageSize}
         </if>
     </select>
+    <select id="getTotalNewsComments" parameterType="Map" resultType="int">
+        select count(*) from tb_news_comment
+        where is_deleted=0
+        <if test="newsId!=null">
+            AND news_id = #{newsId}
+        </if>
+        <if test="commentStatus!=null">
+            AND comment_status = #{commentStatus}
+        </if>
+    </select>
     <update id="checkDone">
         update tb_news_comment
         set comment_status=1 where comment_id in

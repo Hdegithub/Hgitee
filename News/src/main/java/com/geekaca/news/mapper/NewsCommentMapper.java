@@ -5,6 +5,7 @@ import com.geekaca.news.utils.PageBean;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author kanata
@@ -30,4 +31,6 @@ public interface NewsCommentMapper {
     List<NewsComment> findNewsCommentList(PageBean pageBean);
 
     Boolean checkDone(Integer[] ids);
+
+    int getTotalNewsComments(Map map);
 }

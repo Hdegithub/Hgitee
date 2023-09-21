@@ -34,8 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int getTotalComments() {
-//        return newsCommentMapper.getTotalNewsComments(null);
-        return 0;
+        return newsCommentMapper.getTotalNewsComments(null);
     }
 
     @Override

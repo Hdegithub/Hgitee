@@ -255,6 +255,19 @@
             nc.category_name like concat('%', #{keyword}, '%'))
         </if>
     </select>
+    <select id="getTotalNews" parameterType="Map" resultType="int">
+        select count(*) from tb_news
+        where is_deleted=0
+        <if test="keyword!=null">
+            AND (news_title like CONCAT('%',#{keyword},'%' ) or news_category_name like CONCAT('%',#{keyword},'%' ))
+        </if>
+        <if test="newsStatus!=null">
+            AND news_status = #{newsStatus}
+        </if>
+        <if test="newsCategoryId!=null">
+            AND news_category_id = #{newsCategoryId}
+        </if>
+    </select>
 
     <update id="increaseViews">
         update tb_news set news_views = news_views + 1

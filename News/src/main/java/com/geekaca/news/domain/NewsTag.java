@@ -2,10 +2,11 @@ package com.geekaca.news.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
- * 
  * @TableName tb_news_tag
  */
 @Data
@@ -30,6 +31,12 @@ public class NewsTag implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;
+
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -45,9 +52,9 @@ public class NewsTag implements Serializable {
         }
         NewsTag other = (NewsTag) that;
         return (this.getTagId() == null ? other.getTagId() == null : this.getTagId().equals(other.getTagId()))
-            && (this.getTagName() == null ? other.getTagName() == null : this.getTagName().equals(other.getTagName()))
-            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
+                && (this.getTagName() == null ? other.getTagName() == null : this.getTagName().equals(other.getTagName()))
+                && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override

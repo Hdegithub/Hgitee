@@ -29,6 +29,10 @@
         select *
         from tb_news_category
     </select>
+    <select id="getTotalCategories" parameterType="Map" resultType="int">
+        select count(*)  from tb_news_category
+        where is_deleted = 0
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete

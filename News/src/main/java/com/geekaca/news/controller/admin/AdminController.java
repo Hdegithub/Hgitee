@@ -4,7 +4,7 @@ import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.crypto.SecureUtil;
 import com.geekaca.news.domain.AdminUser;
 import com.geekaca.news.mapper.AdminUserMapper;
-import com.geekaca.news.service.AdminUserService;
+import com.geekaca.news.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,20 @@ public class AdminController {
 
     @Autowired
     private AdminUserService userService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private NewsService newsService;
+    @Autowired
+    private LinkService linkService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private CommentService commentService;
     //接收登录
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "/admin/login";
     }
 
@@ -46,7 +56,7 @@ public class AdminController {
         }
         //连接DB 验证用户名和密码
         AdminUser user = userService.login(userName, SecureUtil.md5(password));
-        if (user == null){
+        if (user == null) {
             session.setAttribute("errorMsg", "登陆失败");
             return "admin/login";
         } else {
@@ -59,15 +69,15 @@ public class AdminController {
     }
 
     //登录成功后访问的地址
-    @GetMapping({"","/index","/index.html"})
-    public String index(HttpServletRequest req){
-        req.setAttribute("path","index");
+    @GetMapping({"", "/index", "/index.html"})
+    public String index(HttpServletRequest req) {
+        req.setAttribute("path", "index");
         //类别数量 ctrl + Alt 鼠标左键点击，跳转函数实现
-        req.setAttribute("categoryCount",0);
-        req.setAttribute("blogCount",0);
-        req.setAttribute("linkCount",0);
-        req.setAttribute("tagCount",0);
-        req.setAttribute("commentCount",0);
+        req.setAttribute("categoryCount", categoryService.getTotalCategories());
+        req.setAttribute("blogCount", newsService.getTotalNews());
+        req.setAttribute("linkCount", linkService.getTotalLinks());
+        req.setAttribute("tagCount", tagService.getTotalTags());
+        req.setAttribute("commentCount",commentService.getTotalComments() );
         return "admin/index";
     }
 }

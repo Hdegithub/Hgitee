@@ -2,7 +2,9 @@ package com.geekaca.news.service;
 
 import com.geekaca.news.domain.News;
 
+import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -52,4 +54,6 @@ public interface NewsService {
     PageResult getPageNews(Integer pageNo, Integer pageSize, String keyword);
 
     int updateNewsViews(Long newsId);
+
+    int getTotalNews();
 }

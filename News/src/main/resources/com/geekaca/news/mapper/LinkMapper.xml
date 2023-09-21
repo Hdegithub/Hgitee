@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekaca.news.mapper.LinkMapper">
+    <resultMap id="BaseResultMap" type="com.geekaca.news.domain.Link">
+        <id column="link_id" jdbcType="INTEGER" property="linkId"/>
+        <result column="link_type" jdbcType="TINYINT" property="linkType"/>
+        <result column="link_name" jdbcType="VARCHAR" property="linkName"/>
+        <result column="link_url" jdbcType="VARCHAR" property="linkUrl"/>
+        <result column="link_description" jdbcType="VARCHAR" property="linkDescription"/>
+        <result column="link_rank" jdbcType="INTEGER" property="linkRank"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <select id="getTotalLinks" parameterType="Map" resultType="int">
+        select count(*)  from tb_link
+        where is_deleted=0
+    </select>
+
+</mapper>

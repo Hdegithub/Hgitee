@@ -28,4 +28,9 @@ public class TagNewsServiceImpl implements TagService {
         PageResult pageResult = new PageResult(tags, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+    @Override
+    public int getTotalTags() {
+        return tagMapper.getTotalTags(null);
+    }
 }

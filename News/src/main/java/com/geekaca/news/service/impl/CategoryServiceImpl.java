@@ -16,4 +16,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<NewsCategory> getAllCategories() {
         return categoryMapper.findAll();
     }
+
+    @Override
+    public int getTotalCategories() {
+        return categoryMapper.getTotalCategories(null);
+    }
 }

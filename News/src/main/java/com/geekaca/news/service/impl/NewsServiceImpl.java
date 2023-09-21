@@ -7,6 +7,7 @@ import com.geekaca.news.mapper.NewsMapper;
 import com.geekaca.news.mapper.NewsTagMapper;
 import com.geekaca.news.mapper.NewsTagRelationMapper;
 import com.geekaca.news.service.NewsService;
+import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,4 +93,10 @@ public class NewsServiceImpl implements NewsService {
         int views = newsMapper.increaseViews(newsId);
         return views;
     }
+
+    @Override
+    public int getTotalNews() {
+        return newsMapper.getTotalNews(null);
+    }
+
 }
