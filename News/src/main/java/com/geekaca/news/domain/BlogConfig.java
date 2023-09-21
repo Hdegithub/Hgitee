@@ -1,5 +1,7 @@
 package com.geekaca.news.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BlogConfig {
@@ -7,8 +9,10 @@ public class BlogConfig {
 
     private String configValue;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     public String getConfigName() {

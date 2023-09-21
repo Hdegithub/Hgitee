@@ -2,6 +2,8 @@ package com.geekaca.news.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -28,6 +30,7 @@ public class NewsTagRelation implements Serializable {
     /**
      * 添加时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
