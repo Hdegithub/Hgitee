@@ -1,20 +1,30 @@
 package com.geekaca.news.service.impl;
 
 import com.geekaca.news.domain.News;
+import com.geekaca.news.domain.NewsCategory;
 import com.geekaca.news.domain.NewsTag;
 import com.geekaca.news.domain.NewsTagRelation;
+import com.geekaca.news.mapper.NewsCategoryMapper;
 import com.geekaca.news.mapper.NewsMapper;
 import com.geekaca.news.mapper.NewsTagMapper;
 import com.geekaca.news.mapper.NewsTagRelationMapper;
 import com.geekaca.news.service.NewsService;
+import com.geekaca.news.utils.PageInfo;
 import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
+import com.geekaca.news.utils.PatternUtil;
+import com.geekaca.news.vo.BlogListVO;
+import com.geekaca.news.vo.SimpleBlogListVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -24,6 +34,8 @@ public class NewsServiceImpl implements NewsService {
     private NewsTagMapper tagMapper;
     @Autowired
     private NewsTagRelationMapper tagRelationMapper;
+    @Autowired
+    private NewsCategoryMapper categoryMapper;
 
     @Override
     public boolean saveNews(News news) {
@@ -97,6 +109,60 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public int getTotalNews() {
         return newsMapper.getTotalNews(null);
+    }
+
+    @Override
+    public PageResult getBlogsPageByTag(String tagName, Integer page) {
+        if (PatternUtil.validKeyword(tagName)) {
+            NewsTag tag = tagMapper.selectByTagName(tagName);
+            if (tag != null && page > 0) {
+                Map param = new HashMap();
+                param.put("page", page);
+                param.put("limit", 9);
+                param.put("tagId", tag.getTagId());
+                PageInfo pageUtil = new PageInfo(param);
+                List<News> newsList = newsMapper.getNewssPageByTagId(pageUtil);
+                List<BlogListVO> blogListVOS = getBlogListVOsByBlogs(newsList);
+                int total = newsMapper.getTotalNewssByTagId(pageUtil);
+                PageResult pageResult = new PageResult(blogListVOS, total, pageUtil.getLimit(), pageUtil.getPage());
+                return pageResult;
+            }
+        }
+        return null;
+    }
+
+    private List<BlogListVO> getBlogListVOsByBlogs(List<News> newsList) {
+        List<BlogListVO> blogListVOS = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(newsList)) {
+            List<Integer> categoryIds = newsList.stream().map(News::getNewsCategoryId).collect(Collectors.toList());
+            Map<Integer, String> blogCategoryMap = new HashMap<>();
+            if (!CollectionUtils.isEmpty(categoryIds)) {
+                List<NewsCategory> blogCategories = categoryMapper.selectByCategoryIds(categoryIds);
+                if (!CollectionUtils.isEmpty(blogCategories)) {
+                    blogCategoryMap = blogCategories.stream().collect(Collectors.toMap(NewsCategory::getCategoryId, NewsCategory::getCategoryIcon, (key1, key2) -> key2));
+                }
+            }
+            for (News news : newsList) {
+                BlogListVO blogListVO = new BlogListVO();
+                BeanUtils.copyProperties(news, blogListVO);
+                System.out.println(news);
+                System.out.println(blogListVO);
+                if (blogCategoryMap.containsKey(news.getNewsCategoryId())) {
+                    blogListVO.setNewsCategoryIcon(blogCategoryMap.get(news.getNewsCategoryId()));
+                } else {
+                    blogListVO.setNewsCategoryId(0);
+                    blogListVO.setNewsCategoryName("默认分类");
+                    blogListVO.setNewsCategoryIcon("/admin/dist/img/category/00.png");
+                }
+                blogListVOS.add(blogListVO);
+            }
+        }
+        return blogListVOS;
+    }
+
+    @Override
+    public List<SimpleBlogListVO> getBlogListForIndexPage(int type) {
+        return null;
     }
 
 }

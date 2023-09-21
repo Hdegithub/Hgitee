@@ -1,6 +1,7 @@
 package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.News;
+import com.geekaca.news.utils.PageInfo;
 import com.geekaca.news.utils.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -54,5 +55,9 @@ public interface NewsMapper {
     int increaseViews(@Param("newsId")Long newsId);
 
     int getTotalNews(PageQueryUtil pageUtil);
+
+    List<News> getNewssPageByTagId(PageInfo pageUtil);
+
+    int getTotalNewssByTagId(PageInfo pageUtil);
 
 }

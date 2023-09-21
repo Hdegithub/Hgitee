@@ -268,6 +268,23 @@
             AND news_category_id = #{newsCategoryId}
         </if>
     </select>
+    <select id="getNewssPageByTagId" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_news
+        where news_id IN (SELECT news_id FROM tb_news_tag_relation WHERE tag_id = #{tagId})
+        AND news_status =1 AND is_deleted=0
+        order by news_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+    <select id="getTotalNewssByTagId" parameterType="Map" resultType="int">
+        select count(*)
+        from tb_news
+        where  news_id IN (SELECT news_id FROM tb_news_tag_relation WHERE tag_id = #{tagId})
+          AND news_status =1 AND is_deleted=0
+    </select>
 
     <update id="increaseViews">
         update tb_news set news_views = news_views + 1

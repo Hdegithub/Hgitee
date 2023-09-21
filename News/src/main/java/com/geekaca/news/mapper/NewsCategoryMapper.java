@@ -3,6 +3,7 @@ package com.geekaca.news.mapper;
 import com.geekaca.news.domain.NewsCategory;
 import com.geekaca.news.utils.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface NewsCategoryMapper {
     List<NewsCategory> findAll();
 
     int getTotalCategories(PageQueryUtil pageUtil);
+
+    List<NewsCategory> selectByCategoryIds(@Param("categoryIds") List<Integer> categoryIds);
+
 }

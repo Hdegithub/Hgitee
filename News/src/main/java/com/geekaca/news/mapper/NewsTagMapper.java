@@ -3,6 +3,7 @@ package com.geekaca.news.mapper;
 import com.geekaca.news.domain.News;
 import com.geekaca.news.domain.NewsTag;
 import com.geekaca.news.domain.TagNewsCount;
+import com.geekaca.news.utils.PageInfo;
 import com.geekaca.news.utils.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -40,5 +41,7 @@ public interface NewsTagMapper {
     NewsTag selectByTagName(String tagName);
 
     int deleteBatch(Integer[] ids);
+
+    List<TagNewsCount> getTagCount();
 
 }

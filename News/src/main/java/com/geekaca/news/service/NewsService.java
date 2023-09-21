@@ -4,6 +4,7 @@ import com.geekaca.news.domain.News;
 
 import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
+import com.geekaca.news.vo.SimpleBlogListVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,4 +57,8 @@ public interface NewsService {
     int updateNewsViews(Long newsId);
 
     int getTotalNews();
+
+    PageResult getBlogsPageByTag(String tagName, Integer page);
+
+    List<SimpleBlogListVO> getBlogListForIndexPage(int type);
 }

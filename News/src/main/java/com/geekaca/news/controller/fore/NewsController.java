@@ -1,13 +1,11 @@
 package com.geekaca.news.controller.fore;
 
 import cn.hutool.captcha.ShearCaptcha;
+import com.geekaca.news.domain.Link;
 import com.geekaca.news.domain.News;
 import com.geekaca.news.domain.NewsComment;
 import com.geekaca.news.domain.TagNewsCount;
-import com.geekaca.news.service.CommentService;
-import com.geekaca.news.service.ConfigService;
-import com.geekaca.news.service.NewsService;
-import com.geekaca.news.service.TagService;
+import com.geekaca.news.service.*;
 import com.geekaca.news.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 前台
@@ -36,7 +35,8 @@ public class NewsController {
     private CommentService commentService;
     @Autowired
     private TagService tagService;
-
+    @Autowired
+    private LinkService linkService;
     /**
      * 首页
      *
@@ -44,13 +44,13 @@ public class NewsController {
      */
     @GetMapping({"/", "/index", "index.html"})
     public String index(HttpServletRequest request) {
-        return this.page(request, 1,null);
+        return this.page(request, 1, null);
     }
 
     @GetMapping({"/page/{pageNum}"})
     private String page(HttpServletRequest request, @PathVariable("pageNum") int pageNum,
                         @RequestParam(name = "keyword", required = false) String keyword) {
-        if (keyword != null){
+        if (keyword != null) {
             return "blog/" + theme + "/index";
         }
         PageResult pageNews = newsService.getPageNews(pageNum, 8, keyword);
@@ -78,7 +78,7 @@ public class NewsController {
      */
     @GetMapping({"/search/{keyword}"})
     public String search(HttpServletRequest request, @PathVariable("keyword") String keyword) {
-        return search(request, 1,keyword);
+        return search(request, 1, keyword);
     }
 
     /**
@@ -87,7 +87,7 @@ public class NewsController {
      * @return
      */
     @GetMapping({"/search/{keyword}/{pageNum}"})
-    public String search(HttpServletRequest req,@PathVariable("pageNum") int pageNum, @PathVariable("keyword") String keyword) {
+    public String search(HttpServletRequest req, @PathVariable("pageNum") int pageNum, @PathVariable("keyword") String keyword) {
         PageResult pageNews = newsService.getPageNews(pageNum, 5, keyword);
         req.setAttribute("blogPageResult", pageNews);
         req.setAttribute("pageName", "搜索");
@@ -98,12 +98,7 @@ public class NewsController {
         //点击最多
         req.setAttribute("hotBlogs", 0);
         //热门标签
-        List<TagNewsCount> tagCounts = tagService.getAll();
-        if (tagCounts == null) {
-            //创建空集合 JSON[]
-            tagCounts = Collections.emptyList();
-        }
-        req.setAttribute("hotTags", tagCounts);
+        req.setAttribute("hotTags", tagService.getAll());
         req.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/list";
     }
@@ -199,5 +194,59 @@ public class NewsController {
         }
         comment.setCommentBody(MyBlogUtils.cleanString(commentBody));
         return ResultGenerator.genSuccessResult(commentService.addComment(comment));
+    }
+
+    /**
+     * 标签列表页
+     *
+     * @return
+     */
+    @GetMapping({"/tag/{tagName}"})
+    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName) {
+        return tag(request, tagName, 1);
+    }
+
+    /**
+     * 标签列表页
+     *
+     * @return
+     */
+    @GetMapping({"/tag/{tagName}/{page}"})
+    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName, @PathVariable("page") Integer page) {
+        PageResult blogPageResult = newsService.getBlogsPageByTag(tagName, page);
+        request.setAttribute("blogPageResult", blogPageResult);
+        request.setAttribute("pageName", "标签");
+        request.setAttribute("pageUrl", "tag");
+        request.setAttribute("keyword", tagName);
+        request.setAttribute("newBlogs", newsService.getBlogListForIndexPage(1));
+        request.setAttribute("hotBlogs", newsService.getBlogListForIndexPage(0));
+        request.setAttribute("hotTags", tagService.getBlogTagCountForIndex());
+        request.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/list";
+    }
+
+    /**
+     * 友情链接页
+     *
+     * @return
+     */
+    @GetMapping({"/link"})
+    public String link(HttpServletRequest request) {
+        request.setAttribute("pageName", "友情链接");
+        Map<Byte, List<Link>> linkMap = linkService.getLinksForLinkPage();
+        if (linkMap != null) {
+            //判断友链类别并封装数据 0-友链 1-推荐 2-个人网站
+            if (linkMap.containsKey((byte) 0)) {
+                request.setAttribute("favoriteLinks", linkMap.get((byte) 0));
+            }
+            if (linkMap.containsKey((byte) 1)) {
+                request.setAttribute("recommendLinks", linkMap.get((byte) 1));
+            }
+            if (linkMap.containsKey((byte) 2)) {
+                request.setAttribute("personalLinks", linkMap.get((byte) 2));
+            }
+        }
+        request.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/link";
     }
 }

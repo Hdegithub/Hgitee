@@ -59,4 +59,9 @@ public class TagNewsServiceImpl implements TagService {
         //删除tag
         return tagMapper.deleteBatch(ids) > 0;
     }
+
+    @Override
+    public List<TagNewsCount> getBlogTagCountForIndex() {
+        return tagMapper.getTagCount();
+    }
 }
