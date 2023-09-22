@@ -61,7 +61,12 @@ public class TagNewsServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagNewsCount> getBlogTagCountForIndex() {
-        return tagMapper.getTagCount();
+    public List<TagNewsCount> selectTagNewsCounts() {
+        return tagMapper.selectTagNewsCounts();
     }
+
+//    @Override
+//    public List<TagNewsCount> getBlogTagCountForIndex() {
+//        return tagMapper.getTagCount();
+//    }
 }

@@ -220,7 +220,7 @@ public class NewsController {
         request.setAttribute("keyword", tagName);
         request.setAttribute("newBlogs", newsService.getBlogListForIndexPage(1));
         request.setAttribute("hotBlogs", newsService.getBlogListForIndexPage(0));
-        request.setAttribute("hotTags", tagService.getBlogTagCountForIndex());
+        request.setAttribute("hotTags", tagService.selectTagNewsCounts());
         request.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/list";
     }

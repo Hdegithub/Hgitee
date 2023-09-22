@@ -42,6 +42,5 @@ public interface NewsTagMapper {
 
     int deleteBatch(Integer[] ids);
 
-    List<TagNewsCount> getTagCount();
 
 }
