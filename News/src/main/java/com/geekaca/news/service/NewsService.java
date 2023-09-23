@@ -60,5 +60,13 @@ public interface NewsService {
 
     PageResult getBlogsPageByTag(String tagName, Integer page);
 
-    List<SimpleBlogListVO> getBlogListForIndexPage(int type);
+
+
+    /**
+     * 首页侧边栏 数据列表
+     * 0-点击最多 1-最新发布
+     * @param type
+     * @return
+     */
+    List<SimpleBlogListVO> getNewsListForIndexPage(int type);
 }

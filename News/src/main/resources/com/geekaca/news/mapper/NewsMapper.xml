@@ -285,6 +285,17 @@
         where  news_id IN (SELECT news_id FROM tb_news_tag_relation WHERE tag_id = #{tagId})
           AND news_status =1 AND is_deleted=0
     </select>
+    <select id="findNewsListByType" resultMap="BaseResultMap">
+        select * from tb_news
+        where news_status = 1<!-- 发布状态的文章 -->
+        <if test="type!=null and type==0">
+            order by news_views desc
+        </if>
+        <if test="type!=null and type==1">
+            order by news_id desc
+        </if>
+        limit #{limit}
+    </select>
 
     <update id="increaseViews">
         update tb_news set news_views = news_views + 1

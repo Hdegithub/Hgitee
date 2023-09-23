@@ -160,9 +160,20 @@ public class NewsServiceImpl implements NewsService {
         return blogListVOS;
     }
 
+
     @Override
-    public List<SimpleBlogListVO> getBlogListForIndexPage(int type) {
-        return null;
+    public List<SimpleBlogListVO> getNewsListForIndexPage(int type) {
+        List<SimpleBlogListVO> simpleBlogListVOListM = new ArrayList<>();
+        List<News> newsList = newsMapper.findNewsListByType(type, 9);
+        if (!CollectionUtils.isEmpty(newsList)) {
+            for (News news : newsList) {
+                SimpleBlogListVO simpleBlogListVO = new SimpleBlogListVO();
+                BeanUtils.copyProperties(news,simpleBlogListVO);
+                simpleBlogListVOListM.add(simpleBlogListVO);
+            }
+        }
+
+        return simpleBlogListVOListM;
     }
 
 }

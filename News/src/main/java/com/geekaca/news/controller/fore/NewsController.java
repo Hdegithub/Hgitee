@@ -56,9 +56,9 @@ public class NewsController {
         PageResult pageNews = newsService.getPageNews(pageNum, 8, keyword);
         request.setAttribute("blogPageResult", pageNews);
         //最新发布
-        request.setAttribute("newBlogs", 0);
+        request.setAttribute("newBlogs", newsService.getNewsListForIndexPage(1));
         //点击最多
-        request.setAttribute("hotBlogs", 0);
+        request.setAttribute("hotBlogs", newsService.getNewsListForIndexPage(0));
         //热门标签
         List<TagNewsCount> tagCounts = tagService.getAll();
         if (tagCounts == null) {
@@ -94,12 +94,41 @@ public class NewsController {
         req.setAttribute("pageUrl", "search");
         req.setAttribute("keyword", keyword);
         //最新发布
-        req.setAttribute("newBlogs", 0);
+        req.setAttribute("newBlogs", newsService.getNewsListForIndexPage(1));
         //点击最多
-        req.setAttribute("hotBlogs", 0);
+        req.setAttribute("hotBlogs", newsService.getNewsListForIndexPage(0));
         //热门标签
         req.setAttribute("hotTags", tagService.getAll());
         req.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/list";
+    }
+
+    /**
+     * 标签列表页
+     *
+     * @return
+     */
+    @GetMapping({"/tag/{tagName}"})
+    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName) {
+        return tag(request, tagName, 1);
+    }
+
+    /**
+     * 标签列表页
+     *
+     * @return
+     */
+    @GetMapping({"/tag/{tagName}/{page}"})
+    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName, @PathVariable("page") Integer page) {
+        PageResult blogPageResult = newsService.getBlogsPageByTag(tagName, page);
+        request.setAttribute("blogPageResult", blogPageResult);
+        request.setAttribute("pageName", "标签");
+        request.setAttribute("pageUrl", "tag");
+        request.setAttribute("keyword", tagName);
+        request.setAttribute("newBlogs", newsService.getNewsListForIndexPage(1));
+        request.setAttribute("hotBlogs", newsService.getNewsListForIndexPage(0));
+        request.setAttribute("hotTags", tagService.selectTagNewsCounts());
+        request.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/list";
     }
 
@@ -196,34 +225,7 @@ public class NewsController {
         return ResultGenerator.genSuccessResult(commentService.addComment(comment));
     }
 
-    /**
-     * 标签列表页
-     *
-     * @return
-     */
-    @GetMapping({"/tag/{tagName}"})
-    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName) {
-        return tag(request, tagName, 1);
-    }
 
-    /**
-     * 标签列表页
-     *
-     * @return
-     */
-    @GetMapping({"/tag/{tagName}/{page}"})
-    public String tag(HttpServletRequest request, @PathVariable("tagName") String tagName, @PathVariable("page") Integer page) {
-        PageResult blogPageResult = newsService.getBlogsPageByTag(tagName, page);
-        request.setAttribute("blogPageResult", blogPageResult);
-        request.setAttribute("pageName", "标签");
-        request.setAttribute("pageUrl", "tag");
-        request.setAttribute("keyword", tagName);
-        request.setAttribute("newBlogs", newsService.getBlogListForIndexPage(1));
-        request.setAttribute("hotBlogs", newsService.getBlogListForIndexPage(0));
-        request.setAttribute("hotTags", tagService.selectTagNewsCounts());
-        request.setAttribute("configurations", configService.getAllConfigs());
-        return "blog/" + theme + "/list";
-    }
 
     /**
      * 友情链接页

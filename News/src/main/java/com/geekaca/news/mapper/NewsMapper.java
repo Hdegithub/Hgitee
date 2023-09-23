@@ -60,4 +60,6 @@ public interface NewsMapper {
 
     int getTotalNewssByTagId(PageInfo pageUtil);
 
+    List<News> findNewsListByType(@Param("type") int type, @Param("limit") int limit);
+
 }
