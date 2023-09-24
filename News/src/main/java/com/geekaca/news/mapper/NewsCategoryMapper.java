@@ -34,4 +34,5 @@ public interface NewsCategoryMapper {
 
     List<NewsCategory> selectByCategoryIds(@Param("categoryIds") List<Integer> categoryIds);
 
+    List<NewsCategory> findCategoryList(PageQueryUtil pageUtil);
 }
