@@ -268,7 +268,7 @@
             AND news_category_id = #{newsCategoryId}
         </if>
     </select>
-    <select id="getNewssPageByTagId" parameterType="Map" resultMap="BaseResultMap">
+    <select id="getNewsPageByTagId" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_news
@@ -279,7 +279,7 @@
             limit #{start},#{limit}
         </if>
     </select>
-    <select id="getTotalNewssByTagId" parameterType="Map" resultType="int">
+    <select id="getTotalNewsByTagId" parameterType="Map" resultType="int">
         select count(*)
         from tb_news
         where  news_id IN (SELECT news_id FROM tb_news_tag_relation WHERE tag_id = #{tagId})
@@ -300,5 +300,15 @@
     <update id="increaseViews">
         update tb_news set news_views = news_views + 1
         where news_id = #{newsId}
+    </update>
+    <update id="updateNewsCategorys">
+        update tb_news
+        set news_category_id = #{categoryId,jdbcType=INTEGER},
+        news_category_name = #{categoryName,jdbcType=VARCHAR}
+        where news_category_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and is_deleted =0
     </update>
 </mapper>

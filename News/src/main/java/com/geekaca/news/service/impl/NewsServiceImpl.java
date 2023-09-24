@@ -10,7 +10,6 @@ import com.geekaca.news.mapper.NewsTagMapper;
 import com.geekaca.news.mapper.NewsTagRelationMapper;
 import com.geekaca.news.service.NewsService;
 import com.geekaca.news.utils.PageInfo;
-import com.geekaca.news.utils.PageQueryUtil;
 import com.geekaca.news.utils.PageResult;
 import com.geekaca.news.utils.PatternUtil;
 import com.geekaca.news.vo.BlogListVO;
@@ -121,9 +120,9 @@ public class NewsServiceImpl implements NewsService {
                 param.put("limit", 9);
                 param.put("tagId", tag.getTagId());
                 PageInfo pageUtil = new PageInfo(param);
-                List<News> newsList = newsMapper.getNewssPageByTagId(pageUtil);
+                List<News> newsList = newsMapper.getNewsPageByTagId(pageUtil);
                 List<BlogListVO> blogListVOS = getBlogListVOsByBlogs(newsList);
-                int total = newsMapper.getTotalNewssByTagId(pageUtil);
+                int total = newsMapper.getTotalNewsByTagId(pageUtil);
                 PageResult pageResult = new PageResult(blogListVOS, total, pageUtil.getLimit(), pageUtil.getPage());
                 return pageResult;
             }

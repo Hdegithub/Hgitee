@@ -21,4 +21,8 @@ public interface CategoryService {
     PageResult getNewsCategoryPage(PageQueryUtil pageUtil);
 
     Boolean saveCategory(String categoryName, String categoryIcon);
+
+    Boolean updateCategory(Integer categoryId, String categoryName, String categoryIcon);
+
+    Boolean deleteCategory(Integer[] ids);
 }

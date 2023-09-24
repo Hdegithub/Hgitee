@@ -56,10 +56,11 @@ public interface NewsMapper {
 
     int getTotalNews(PageQueryUtil pageUtil);
 
-    List<News> getNewssPageByTagId(PageInfo pageUtil);
+    List<News> getNewsPageByTagId(PageInfo pageUtil);
 
-    int getTotalNewssByTagId(PageInfo pageUtil);
+    int getTotalNewsByTagId(PageInfo pageUtil);
 
     List<News> findNewsListByType(@Param("type") int type, @Param("limit") int limit);
 
+    int updateNewsCategorys(@Param("categoryName")String categoryName, @Param("categoryId") Integer categoryId,@Param("ids") Integer[] ids);
 }

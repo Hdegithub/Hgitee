@@ -66,4 +66,42 @@ public class CategoryController {
         }
     }
 
+    /**
+     * 分类修改
+     */
+    @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result update(@RequestParam("categoryId") Integer categoryId,
+                         @RequestParam("categoryName") String categoryName,
+                         @RequestParam("categoryIcon") String categoryIcon) {
+        if (!StringUtils.hasText(categoryName)) {
+            return ResultGenerator.genFailResult("请输入分类名称！");
+        }
+        if (!StringUtils.hasText(categoryIcon)) {
+            return ResultGenerator.genFailResult("请选择分类图标！");
+        }
+        if (categoryService.updateCategory(categoryId, categoryName, categoryIcon)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("分类名称重复");
+        }
+    }
+
+
+    /**
+     * 分类删除
+     */
+    @RequestMapping(value = "/categories/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (categoryService.deleteCategory(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
+
 }

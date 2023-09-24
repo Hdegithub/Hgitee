@@ -16,13 +16,13 @@ import java.util.List;
 @Mapper
 public interface NewsCategoryMapper {
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByIds(Integer[] ids);
 
     int insert(NewsCategory record);
 
     int insertSelective(NewsCategory record);
 
-    NewsCategory selectByPrimaryKey(Long id);
+    NewsCategory selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(NewsCategory record);
 
