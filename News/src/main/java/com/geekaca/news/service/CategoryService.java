@@ -19,4 +19,6 @@ public interface CategoryService {
      * @return
      */
     PageResult getNewsCategoryPage(PageQueryUtil pageUtil);
+
+    Boolean saveCategory(String categoryName, String categoryIcon);
 }

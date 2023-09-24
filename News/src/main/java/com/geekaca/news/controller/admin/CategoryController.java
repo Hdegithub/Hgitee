@@ -46,5 +46,24 @@ public class CategoryController {
         return ResultGenerator.genSuccessResult(categoryService.getNewsCategoryPage(pageUtil));
     }
 
+    /**
+     * 分类添加
+     */
+    @RequestMapping(value = "/categories/save", method = RequestMethod.POST)
+    @ResponseBody
+    public Result save(@RequestParam("categoryName") String categoryName,
+                       @RequestParam("categoryIcon") String categoryIcon) {
+        if (!StringUtils.hasText(categoryName)) {
+            return ResultGenerator.genFailResult("请输入分类名称！");
+        }
+        if (!StringUtils.hasText(categoryIcon)) {
+            return ResultGenerator.genFailResult("请选择分类图标！");
+        }
+        if (categoryService.saveCategory(categoryName, categoryIcon)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("分类名称重复");
+        }
+    }
 
 }

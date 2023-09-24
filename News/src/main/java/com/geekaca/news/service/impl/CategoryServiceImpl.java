@@ -31,4 +31,16 @@ public class CategoryServiceImpl implements CategoryService {
         PageResult pageResult = new PageResult(categoryList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+    @Override
+    public Boolean saveCategory(String categoryName, String categoryIcon) {
+        NewsCategory temp = categoryMapper.selectByCategoryName(categoryName);
+        if (temp == null) {
+            NewsCategory NewsCategory = new NewsCategory();
+            NewsCategory.setCategoryName(categoryName);
+            NewsCategory.setCategoryIcon(categoryIcon);
+            return categoryMapper.insertSelective(NewsCategory) > 0;
+        }
+        return false;
+    }
 }
