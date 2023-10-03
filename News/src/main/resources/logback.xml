@@ -8,7 +8,21 @@
             <pattern>[%level]  %cyan([%thread]) %boldGreen(%logger{15}) - %msg %n</pattern>
         </encoder>
     </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
 
+        <file>/tmp/news.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                /tmp/news.-%d{yyyy-MMdd}.log%i.gz
+            </fileNamePattern>
+            <maxFileSize>1Mb</maxFileSize>
+        </rollingPolicy>
+    </appender>
 
     <logger name="com.geekaca.news.mapper" level="DEBUG">
 
@@ -24,5 +38,6 @@
       -->
     <root level="info">
         <appender-ref ref="Console"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
