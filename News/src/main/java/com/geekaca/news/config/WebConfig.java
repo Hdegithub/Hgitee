@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径
-        registry.addInterceptor(adminLoginInterceptor).addPathPatterns("/admin/**").excludePathPatterns("/admin/dologin").excludePathPatterns("/admin/dist/**").excludePathPatterns("/admin/plugins/**");
+        registry.addInterceptor(adminLoginInterceptor).addPathPatterns("/admin/**").excludePathPatterns("/admin/login").excludePathPatterns("/admin/dist/**").
+                excludePathPatterns("/admin/plugins/**");
     }
 
     @Override

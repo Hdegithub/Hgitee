@@ -36,7 +36,7 @@ public class AdminController {
         return "admin/login";
     }
 
-    @RequestMapping("/dologin")
+    @RequestMapping("/login")
     public String doLogin(@RequestParam("userName") String userName,
                           @RequestParam("password") String password,
                           @RequestParam("verifyCode") String verifyCode,

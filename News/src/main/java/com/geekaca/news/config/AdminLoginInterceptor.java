@@ -19,7 +19,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
         String requestServletPath = request.getServletPath();
         if (requestServletPath.startsWith("/admin") && null == request.getSession().getAttribute("loginUser")) {
             request.getSession().setAttribute("errorMsg", "请重新登陆");
-            response.sendRedirect(request.getContextPath() + "/admin/dologin");
+            response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         } else {
             request.getSession().removeAttribute("errorMsg");
