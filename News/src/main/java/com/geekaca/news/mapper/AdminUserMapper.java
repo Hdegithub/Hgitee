@@ -13,13 +13,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AdminUserMapper {
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(AdminUser record);
 
     int insertSelective(AdminUser record);
 
-    AdminUser selectByPrimaryKey(Long id);
+    AdminUser selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(AdminUser record);
 
