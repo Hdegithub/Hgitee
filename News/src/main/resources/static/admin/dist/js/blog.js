@@ -90,7 +90,7 @@ function reload() {
 }
 
 function addBlog() {
-    window.location.href = "/admin/blogs/save";
+    window.location.href = "/admin/blogs/edit";
 }
 
 function editBlog() {
