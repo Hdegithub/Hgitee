@@ -60,6 +60,19 @@ public class BGNewsController {
         return "admin/edit";
     }
 
+    //新闻修改
+    @GetMapping("/blogs/edit/{blogId}")
+    public String edit(HttpServletRequest request, @PathVariable("blogId") Long blogId) {
+        request.setAttribute("path", "edit");
+        News blog = newsService.getNewsById(blogId);
+        if (blog == null) {
+            return "error/error_400";
+        }
+        request.setAttribute("blog", blog);
+        request.setAttribute("categories", categoryService.getAllCategories());
+        return "admin/edit";
+    }
+
     //新闻管理-新增   返回JSON
     @PostMapping("/blogs/save")
     @ResponseBody
@@ -108,9 +121,62 @@ public class BGNewsController {
         news.setEnableComment(enableComment);
         boolean isOk = newsService.saveNews(news);
         if (isOk) {
-            return ResultGenerator.genSuccessResult("添加成功");
+            return ResultGenerator.genSuccessResult("保存成功");
         } else {
-            return ResultGenerator.genFailResult("添加失败");
+            return ResultGenerator.genFailResult("保存失败");
+        }
+    }
+
+    @PostMapping("/blogs/update")
+    @ResponseBody
+    public Result update(@RequestParam("blogId") Long blogId,
+                         @RequestParam("blogTitle") String blogTitle,
+                         @RequestParam(name = "blogSubUrl", required = false) String blogSubUrl,
+                         @RequestParam("blogCategoryId") Integer blogCategoryId,
+                         @RequestParam("blogTags") String blogTags,
+                         @RequestParam("blogContent") String blogContent,
+                         @RequestParam("blogCoverImage") String blogCoverImage,
+                         @RequestParam("blogStatus") Integer blogStatus,
+                         @RequestParam("enableComment") Integer enableComment) {
+        if (!StringUtils.hasText(blogTitle)) {
+            return ResultGenerator.genFailResult("请输入文章标题");
+        }
+        if (blogTitle.trim().length() > 150) {
+            return ResultGenerator.genFailResult("标题过长");
+        }
+        if (!StringUtils.hasText(blogTags)) {
+            return ResultGenerator.genFailResult("请输入文章标签");
+        }
+        if (blogTags.trim().length() > 150) {
+            return ResultGenerator.genFailResult("标签过长");
+        }
+        if (blogSubUrl.trim().length() > 150) {
+            return ResultGenerator.genFailResult("路径过长");
+        }
+        if (!StringUtils.hasText(blogContent)) {
+            return ResultGenerator.genFailResult("请输入文章内容");
+        }
+        if (blogTags.trim().length() > 100000) {
+            return ResultGenerator.genFailResult("文章内容过长");
+        }
+        if (!StringUtils.hasText(blogCoverImage)) {
+            return ResultGenerator.genFailResult("封面图不能为空");
+        }
+        News blog = new News();
+        blog.setNewsId(blogId);
+        blog.setNewsTitle(blogTitle);
+        blog.setNewsSubUrl(blogSubUrl);
+        blog.setNewsCategoryId(blogCategoryId);
+        blog.setNewsTags(blogTags);
+        blog.setNewsContent(blogContent);
+        blog.setNewsCoverImage(blogCoverImage);
+        blog.setNewsStatus(blogStatus);
+        blog.setEnableComment(enableComment);
+        String updateBlogResult = newsService.updateNews(blog);
+        if ("success".equals(updateBlogResult)) {
+            return ResultGenerator.genSuccessResult("修改成功");
+        } else {
+            return ResultGenerator.genFailResult(updateBlogResult);
         }
     }
 

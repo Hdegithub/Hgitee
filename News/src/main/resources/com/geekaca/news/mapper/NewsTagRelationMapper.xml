@@ -36,6 +36,14 @@
         delete from tb_news_tag_relation
         where  relation_id = #{relationId,jdbcType=BIGINT} 
     </delete>
+    <delete id="deleteByNewsId" parameterType="java.lang.Long">
+        delete from tb_news_tag_relation
+        where news_id = #{blogId,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByBlogId">
+        delete from tb_news_tag_relation
+        where news_id = #{blogId,jdbcType=BIGINT}
+    </delete>
     <insert id="insert" keyColumn="relation_id" keyProperty="relationId" parameterType="com.geekaca.news.domain.NewsTagRelation" useGeneratedKeys="true">
         insert into tb_news_tag_relation
         ( relation_id,news_id,tag_id
@@ -58,6 +66,14 @@
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT into tb_news_tag_relation(news_id,tag_id)
+        VALUES
+        <foreach collection="relationList" item="item" separator=",">
+            (#{item.blogId,jdbcType=BIGINT},#{item.tagId,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.geekaca.news.domain.NewsTagRelation">
         update tb_news_tag_relation
         <set>

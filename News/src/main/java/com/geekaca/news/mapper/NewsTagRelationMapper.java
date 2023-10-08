@@ -2,6 +2,7 @@ package com.geekaca.news.mapper;
 
 import com.geekaca.news.domain.NewsTagRelation;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,4 +29,9 @@ public interface NewsTagRelationMapper {
 
     List<Long> selectDistinctTagIds(Integer[] ids);
 
+    int deleteByNewsId(Long newsId);
+
+    int batchInsert(@Param("relationList") List<NewsTagRelation> blogTagRelations);
+
+    int deleteByBlogId(Long blogId);
 }

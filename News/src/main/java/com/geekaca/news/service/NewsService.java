@@ -71,4 +71,14 @@ public interface NewsService {
     List<SimpleBlogListVO> getNewsListForIndexPage(int type);
 
     Boolean deleteBatch(Integer[] ids);
+
+    /**
+     * 后台修改
+     *
+     * @param blog
+     * @return
+     */
+    String updateNews(News blog);
+
+    News getNewsById(Long newsId);
 }

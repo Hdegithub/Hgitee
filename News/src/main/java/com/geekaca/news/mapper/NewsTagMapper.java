@@ -43,4 +43,5 @@ public interface NewsTagMapper {
     int deleteBatch(Integer[] ids);
 
 
+    int batchInsertBlogTag(List<NewsTag> tagList);
 }
