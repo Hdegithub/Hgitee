@@ -1,7 +1,7 @@
 # TODO 配置数据源相关信息
 
 server:
-  port: 80
+  port: 8080
 
 spring:
   datasource:

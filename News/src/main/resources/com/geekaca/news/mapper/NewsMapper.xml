@@ -65,6 +65,14 @@
         from tb_news
         where news_id = #{newsId,jdbcType=BIGINT}
     </delete>
+    <delete id="deleteBatch">
+        delete
+        from tb_news
+        where news_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
     <insert id="insert" keyColumn="news_id" keyProperty="newsId" parameterType="com.geekaca.news.domain.News"
             useGeneratedKeys="true">
         insert into tb_news

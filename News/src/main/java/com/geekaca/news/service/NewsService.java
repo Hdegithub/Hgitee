@@ -69,4 +69,6 @@ public interface NewsService {
      * @return
      */
     List<SimpleBlogListVO> getNewsListForIndexPage(int type);
+
+    Boolean deleteBatch(Integer[] ids);
 }

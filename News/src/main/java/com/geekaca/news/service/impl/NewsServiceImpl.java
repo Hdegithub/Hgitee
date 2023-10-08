@@ -175,4 +175,9 @@ public class NewsServiceImpl implements NewsService {
         return simpleBlogListVOListM;
     }
 
+    @Override
+    public Boolean deleteBatch(Integer[] ids) {
+        return newsMapper.deleteBatch(ids) > 0;
+    }
+
 }

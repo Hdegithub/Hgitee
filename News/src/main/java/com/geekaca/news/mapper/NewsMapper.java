@@ -63,4 +63,6 @@ public interface NewsMapper {
     List<News> findNewsListByType(@Param("type") int type, @Param("limit") int limit);
 
     int updateNewsCategorys(@Param("categoryName")String categoryName, @Param("categoryId") Integer categoryId,@Param("ids") Integer[] ids);
+
+    int deleteBatch(Integer[] ids);
 }

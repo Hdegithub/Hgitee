@@ -71,6 +71,7 @@ public class BGNewsController {
                        @RequestParam("blogCoverImage") String blogCoverImage,
                        @RequestParam("blogStatus") Integer blogStatus,
                        @RequestParam("enableComment") Integer enableComment) {
+        //参数校验
         if (!StringUtils.hasText(blogTitle)) {
             return ResultGenerator.genFailResult("请输入文章标题");
         }
@@ -95,6 +96,7 @@ public class BGNewsController {
         if (!StringUtils.hasText(blogCoverImage)) {
             return ResultGenerator.genFailResult("封面图不能为空");
         }
+        //业务层代码操作
         News news = new News();
         news.setNewsTitle(blogTitle);
         news.setNewsSubUrl(blogSubUrl);
@@ -145,4 +147,19 @@ public class BGNewsController {
             response.getWriter().write("{\"success\":0}");
         }
     }
+
+    //新闻删除
+    @PostMapping("/blogs/delete")
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (newsService.deleteBatch(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
+    }
+
 }
