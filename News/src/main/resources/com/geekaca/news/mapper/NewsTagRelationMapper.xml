@@ -42,7 +42,7 @@
     </delete>
     <delete id="deleteByBlogId">
         delete from tb_news_tag_relation
-        where news_id = #{blogId,jdbcType=BIGINT}
+        where news_id = #{newsId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" keyColumn="relation_id" keyProperty="relationId" parameterType="com.geekaca.news.domain.NewsTagRelation" useGeneratedKeys="true">
         insert into tb_news_tag_relation
@@ -70,7 +70,7 @@
         INSERT into tb_news_tag_relation(news_id,tag_id)
         VALUES
         <foreach collection="relationList" item="item" separator=",">
-            (#{item.blogId,jdbcType=BIGINT},#{item.tagId,jdbcType=INTEGER})
+            (#{item.newsId,jdbcType=BIGINT},#{item.tagId,jdbcType=INTEGER})
         </foreach>
     </insert>
 

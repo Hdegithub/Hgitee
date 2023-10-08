@@ -13,7 +13,7 @@ import java.util.List;
 
 @Transactional
 public interface NewsService {
-    boolean saveNews(News news);
+    Boolean saveNews(News news);
 
     /**
      * 前台页面 新闻列表查询

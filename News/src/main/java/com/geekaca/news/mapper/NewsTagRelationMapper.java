@@ -33,5 +33,5 @@ public interface NewsTagRelationMapper {
 
     int batchInsert(@Param("relationList") List<NewsTagRelation> blogTagRelations);
 
-    int deleteByBlogId(Long blogId);
+    int deleteByBlogId(Long newsId);
 }

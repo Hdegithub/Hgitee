@@ -20,11 +20,16 @@ public class NewsTagRelation implements Serializable {
     /**
      * 新闻id
      */
-    private Long blogId;
+    private Long newsId;
 
     /**
      * 标签id
      */
     private Integer tagId;
 
+    /**
+     * 添加时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 }

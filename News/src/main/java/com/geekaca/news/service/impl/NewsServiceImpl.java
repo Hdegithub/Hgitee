@@ -37,7 +37,7 @@ public class NewsServiceImpl implements NewsService {
     private NewsCategoryMapper categoryMapper;
 
     @Override
-    public boolean saveNews(News news) {
+    public Boolean saveNews(News news) {
         //1.向新闻表增加数据
         //2.向新闻和标签关联表   插入数据
         int insertSelective = newsMapper.insertSelective(news);
@@ -62,7 +62,7 @@ public class NewsServiceImpl implements NewsService {
                 tagId=newsTag.getTagId();
             }
             NewsTagRelation newsTagRelation=new NewsTagRelation();
-            newsTagRelation.setBlogId(news.getNewsId());
+            newsTagRelation.setNewsId(news.getNewsId());
             newsTagRelation.setTagId(tagId);
             tagRelationMapper.insertSelective(newsTagRelation);
             //如果不存在，说明是新的标签，插入标签表tb_news_tag,获取生产的tagId，插入关联表
@@ -233,7 +233,7 @@ public class NewsServiceImpl implements NewsService {
         allTagsList.addAll(tagListForInsert);
         for (NewsTag tag : allTagsList) {
             NewsTagRelation blogTagRelation = new NewsTagRelation();
-            blogTagRelation.setBlogId(news.getNewsId());
+            blogTagRelation.setNewsId(news.getNewsId());
             blogTagRelation.setTagId(tag.getTagId());
             blogTagRelations.add(blogTagRelation);
         }
