@@ -17,5 +17,5 @@ public interface TagService {
 
     boolean deleteBatch(Integer[] ids);
 
-List<TagNewsCount> selectTagNewsCounts();
+    List<TagNewsCount> selectTagNewsCounts();
 }

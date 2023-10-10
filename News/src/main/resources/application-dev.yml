@@ -1,7 +1,7 @@
 # TODO 配置数据源相关信息
 
 server:
-  port: 8080
+  port: 18099
 
 spring:
   datasource:
@@ -10,5 +10,19 @@ spring:
     url: jdbc:mysql://localhost:3306/news_db?allowPublicKeyRetrieval=true&useSSL=false&useServerPrepStmts=true&characterEncoding=utf8
     username: root
     password: 123456
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: test826
+      jedis:
+        pool:
+          max-idle: 5 # 最大空闲连接数量
+          max-active: 8 # 最大活跃连接数量
+          max-wait: 60 # 最长等待实际 60s
+          min-idle: 2 # 最小空闲数量
+      timeout: 2000 # 针对redis read命令超时时间
+    # 配置 mybatis domain 包
+
 mybatis:
   type-aliases-package: com.geekaca.news.domain

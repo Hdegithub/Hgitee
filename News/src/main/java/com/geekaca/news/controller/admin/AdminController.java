@@ -1,9 +1,7 @@
 package com.geekaca.news.controller.admin;
-
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.crypto.SecureUtil;
 import com.geekaca.news.domain.AdminUser;
-import com.geekaca.news.mapper.AdminUserMapper;
 import com.geekaca.news.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -11,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +31,8 @@ public class AdminController {
     private TagService tagService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private JedisPool jedisPool;
     //接收登录
 
     @GetMapping("/login")
@@ -62,6 +66,15 @@ public class AdminController {
             session.setAttribute("loginUserId", user.getAdminUserId());
             //session过期时间设置为7200秒 即两小时
             //session.setMaxInactiveInterval(60 * 60 * 2);
+
+            Jedis jedis = jedisPool.getResource();
+            //: 是常用的 redis key的分隔符号
+            String key = "uInfo:" + user.getAdminUserId();
+            Map<String, String> map = new HashMap<>();
+            map.put("loginName", user.getLoginUserName());
+            map.put("nick", user.getNickName());
+            jedis.hmset(key, map);
+            jedis.close();
             return "redirect:/admin/index";
         }
     }
@@ -132,6 +145,22 @@ public class AdminController {
         request.getSession().removeAttribute("loginUser");
         request.getSession().removeAttribute("errorMsg");
         return "admin/login";
+    }
+
+    @GetMapping("/userInfo/{userid}")
+    @ResponseBody
+    public AdminUser getUserInfo(@PathVariable("userid") Integer uid){
+        Jedis jedis = jedisPool.getResource();
+
+        Map<String, String> userMap = jedis.hgetAll("uInfo:" + uid);
+        String loginName = userMap.get("loginName");
+        String nick = userMap.get("nick");
+        AdminUser user = new AdminUser();
+        user.setAdminUserId(uid);
+        user.setNickName(nick);
+        user.setLoginUserName(loginName);
+        System.out.println("被访问-----------");
+        return user;
     }
 }
 

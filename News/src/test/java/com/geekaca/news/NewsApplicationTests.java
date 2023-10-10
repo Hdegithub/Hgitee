@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import redis.clients.jedis.JedisPool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +35,7 @@ public class NewsApplicationTests {
      * 测试新增
      */
     @Test
-    void testInsert(){
+    void testInsert() {
         News news = new News();
         news.setNewsTitle("TestInsert");
         news.setNewsSubUrl("helloBoot");
@@ -67,7 +68,7 @@ public class NewsApplicationTests {
      * 测试删除
      */
     @Test
-    void testDeleteByPrimaryKey(){
+    void testDeleteByPrimaryKey() {
         int i = newsMapper.deleteByPrimaryKey(9L);
         Assertions.assertNotNull(i);
         System.out.println(i);
@@ -77,7 +78,7 @@ public class NewsApplicationTests {
      * 测试修改
      */
     @Test
-    void testUpdateByPrimaryKey(){
+    void testUpdateByPrimaryKey() {
         News news = new News();
         news.setNewsTitle("TestInsert");
         news.setNewsSubUrl("helloBoot");
@@ -86,11 +87,11 @@ public class NewsApplicationTests {
     }
 
     @Test
-    public void testSelectAll(){
+    public void testSelectAll() {
         List<News> newsList = newsMapper.selectAll();
         Assertions.assertNotNull(newsList);
         Assertions.assertTrue(newsList.size() > 0);
-        newsList.forEach((news)->{
+        newsList.forEach((news) -> {
             System.out.println(news);
         });
     }
@@ -99,7 +100,7 @@ public class NewsApplicationTests {
      * 一个新闻对象 身上有一个属性 是集合 集合中村的是 针对这个新闻的所有评论
      */
     @Test
-    public void testSelectById(){
+    public void testSelectById() {
         News news = newsMapper.selectNewsAndCommentsById(6L);
         Assertions.assertNotNull(news);
         System.out.println(news);
@@ -110,20 +111,20 @@ public class NewsApplicationTests {
     }
 
     @Test
-    public void testSelectByName(){
+    public void testSelectByName() {
         News news = new News();
         news.setNewsTitle("hello");
         news.setNewsContent("hello");
         List<News> newsList = newsMapper.selectByName(news);
         Assertions.assertNotNull(newsList);
         Assertions.assertTrue(newsList.size() > 0);
-        newsList.forEach((news1)->{
+        newsList.forEach((news1) -> {
             System.out.println(news1);
         });
     }
 
     @Test
-    public void testMD5(){
+    public void testMD5() {
         String str = "123456";
         String target = SecureUtil.md5(str);
         System.out.println(target);
